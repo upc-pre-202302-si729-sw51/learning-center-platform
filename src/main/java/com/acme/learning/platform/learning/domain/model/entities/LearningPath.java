@@ -27,5 +27,25 @@ public class LearningPath {
         learningPathItems.add(learningPathItem);
     }
 
+    public Long getFirstTutorialIdInLearningPath() {
+        return learningPathItems.get(0).getTutorial().getId();
+    }
+
+    public Tutorial getNextTutorialInLearningPath(Long currentTutorialId) {
+        Long itemId = learningPathItems.stream()
+                .filter(learningPathItem -> learningPathItem.getTutorial().getId().equals(currentTutorialId))
+                .findFirst().map(LearningPathItem::getNextItemId).orElse(null);
+        return itemId != null ? getLearningPathItemWithTutorialId(itemId).getTutorial() : null;
+
+    }
+
+    private LearningPathItem getLearningPathItemWithTutorialId(Long tutorialId) {
+        return learningPathItems.stream().filter(learningPathItem -> learningPathItem.getTutorial().getId().equals(tutorialId))
+                .findFirst().orElse(null);
+    }
+
+    public boolean isLastTutorialInLearningPath(Long currentTutorialId) {
+        return getLearningPathItemWithTutorialId(currentTutorialId).getNextItemId() == null;
+    }
 
 }

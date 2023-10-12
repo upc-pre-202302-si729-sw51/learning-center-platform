@@ -15,6 +15,7 @@ public class LearningPathItem {
     private Course course;
 
     @ManyToOne
+    @Getter
     private Tutorial tutorial;
 
     @Getter
@@ -29,6 +30,11 @@ public class LearningPathItem {
         this.tutorial = null;
         this.nextItemId = null;
     }
+
+    public void updateNexItemId(Long nextItemId) {
+        this.nextItemId = nextItemId;
+    }
+
 
 
 }
