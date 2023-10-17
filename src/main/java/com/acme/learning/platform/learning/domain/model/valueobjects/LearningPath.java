@@ -33,12 +33,21 @@ public class LearningPath {
         return learningPathItems.get(0).getTutorial().getId();
     }
 
+    public Tutorial getFirstTutorialInLearningPath() {
+        return learningPathItems.get(0).getTutorial();
+    }
+
     public Tutorial getNextTutorialInLearningPath(Long currentTutorialId) {
         Long itemId = learningPathItems.stream()
                 .filter(learningPathItem -> learningPathItem.getTutorial().getId().equals(currentTutorialId))
                 .findFirst().map(LearningPathItem::getNextItemId).orElse(null);
         return itemId != null ? getLearningPathItemWithTutorialId(itemId).getTutorial() : null;
 
+    }
+
+    private LearningPathItem getLearningPathItemWithId(Long itemId) {
+        return learningPathItems.stream().filter(learningPathItem ->
+                learningPathItem.getId().equals(itemId)).findFirst().orElse(null);
     }
 
     private LearningPathItem getLearningPathItemWithTutorialId(Long tutorialId) {
@@ -50,4 +59,8 @@ public class LearningPath {
         return getLearningPathItemWithTutorialId(currentTutorialId).getNextItemId() == null;
     }
 
+    public LearningPathItem getLastItemInLearningPath() {
+        return learningPathItems.stream().filter(item -> item.getNextItemId() == null)
+                .findFirst().orElse(null);
+    }
 }
