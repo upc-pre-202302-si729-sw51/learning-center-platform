@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+/***
+ * Represents an enrollment.
+ * The enrollment is an aggregate root
+ */
 @Entity
 public class Enrollment extends AbstractAggregateRoot<Enrollment> {
     @Id
