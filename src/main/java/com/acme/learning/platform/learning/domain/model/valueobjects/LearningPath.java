@@ -1,5 +1,7 @@
-package com.acme.learning.platform.learning.domain.model.entities;
+package com.acme.learning.platform.learning.domain.model.valueobjects;
 
+import com.acme.learning.platform.learning.domain.model.entities.LearningPathItem;
+import com.acme.learning.platform.learning.domain.model.entities.Tutorial;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 
