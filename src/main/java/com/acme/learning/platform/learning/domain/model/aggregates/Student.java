@@ -3,10 +3,11 @@ package com.acme.learning.platform.learning.domain.model.aggregates;
 import com.acme.learning.platform.learning.domain.model.valueobjects.AcmeStudentRecordId;
 import com.acme.learning.platform.learning.domain.model.valueobjects.ProfileId;
 import com.acme.learning.platform.learning.domain.model.valueobjects.StudentPerformanceMetricSet;
+import com.acme.learning.platform.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 
 @Entity
-public class Student {
+public class Student extends AuditableModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -5,12 +5,18 @@ import com.acme.learning.platform.learning.domain.model.valueobjects.EnrollmentS
 import com.acme.learning.platform.learning.domain.model.valueobjects.ProgressRecord;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.AbstractAggregateRoot;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Date;
 
 /***
  * Represents an enrollment.
  * The enrollment is an aggregate root
  */
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Enrollment extends AbstractAggregateRoot<Enrollment> {
     @Id
@@ -35,6 +41,11 @@ public class Enrollment extends AbstractAggregateRoot<Enrollment> {
 
     private EnrollmentStatus status;
 
+    @CreatedDate
+    private Date createdAt;
+
+    @LastModifiedDate
+    private Date updatedAt;
     public Enrollment() {
 
     }

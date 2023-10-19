@@ -2,6 +2,7 @@ package com.acme.learning.platform.learning.domain.model.entities;
 
 import com.acme.learning.platform.learning.domain.model.aggregates.Enrollment;
 import com.acme.learning.platform.learning.domain.model.valueobjects.ProgressStatus;
+import com.acme.learning.platform.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-public class ProgressRecordItem {
+public class ProgressRecordItem extends AuditableModel {
     @Id
     private Long id;
 
