@@ -5,9 +5,9 @@ import com.acme.learning.platform.learning.domain.model.aggregates.Course;
 import com.acme.learning.platform.learning.domain.model.aggregates.Enrollment;
 import com.acme.learning.platform.learning.domain.model.commands.EnrollStudentInCourseCommand;
 import com.acme.learning.platform.learning.domain.services.EnrollmentCommandService;
-import com.acme.learning.platform.learning.infrastructure.repositories.CourseRepository;
-import com.acme.learning.platform.learning.infrastructure.repositories.EnrollmentRepository;
-import com.acme.learning.platform.learning.infrastructure.repositories.StudentRepository;
+import com.acme.learning.platform.learning.infrastructure.persistence.jpa.repositories.CourseRepository;
+import com.acme.learning.platform.learning.infrastructure.persistence.jpa.repositories.EnrollmentRepository;
+import com.acme.learning.platform.learning.infrastructure.persistence.jpa.repositories.StudentRepository;
 import org.springframework.stereotype.Service;
 
 @Service
