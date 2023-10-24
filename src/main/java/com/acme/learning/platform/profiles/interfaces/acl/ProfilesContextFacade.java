@@ -22,7 +22,11 @@ public class ProfilesContextFacade {
         return profileCommandService.handle(createProfileCommand);
     }
 
+<<<<<<< HEAD
     public Long getProfileIdByEmail(String email) {
+=======
+    public Long fetchProfileIdByEmail(String email) {
+>>>>>>> origin/main
         var getProfileByEmailQuery = new GetProfileByEmailQuery(new EmailAddress(email));
         var profile = profileQueryService.handle(getProfileByEmailQuery);
         if (profile.isEmpty()) return 0L;
