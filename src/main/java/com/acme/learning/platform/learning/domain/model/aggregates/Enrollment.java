@@ -82,4 +82,7 @@ public class Enrollment extends AbstractAggregateRoot<Enrollment> {
         return this.status == EnrollmentStatus.REJECTED;
     }
 
+    public String getStatus() {
+        return this.status.name().toLowerCase();
+    }
 }
