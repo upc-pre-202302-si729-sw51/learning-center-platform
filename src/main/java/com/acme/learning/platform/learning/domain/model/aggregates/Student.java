@@ -5,6 +5,7 @@ import com.acme.learning.platform.learning.domain.model.valueobjects.ProfileId;
 import com.acme.learning.platform.learning.domain.model.valueobjects.StudentPerformanceMetricSet;
 import com.acme.learning.platform.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 public class Student extends AuditableModel {
@@ -12,6 +13,7 @@ public class Student extends AuditableModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     @Embedded
     @Column(name = "acme_student_id")
     private AcmeStudentRecordId acmeStudentRecordId;
@@ -33,6 +35,10 @@ public class Student extends AuditableModel {
         this.profileId = new ProfileId(profileId);
     }
 
+    public Student(ProfileId profileId) {
+        this();
+        this.profileId = profileId;
+    }
     public void updateMetricsOnCourseCompleted() {
         this.performanceMetricSet = this.performanceMetricSet.incrementTotalCompletedCourses();
     }
