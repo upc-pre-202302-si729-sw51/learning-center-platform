@@ -1,5 +1,6 @@
 package com.acme.learning.platform.shared.domain.model.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
@@ -14,8 +15,10 @@ import java.util.Date;
 @Data
 public class AuditableModel {
     @CreatedDate
+    @Column(nullable = false, updatable = false)
     private Date createdAt;
     @LastModifiedDate
+    @Column(nullable = false)
     private Date updatedAt;
 
 }
