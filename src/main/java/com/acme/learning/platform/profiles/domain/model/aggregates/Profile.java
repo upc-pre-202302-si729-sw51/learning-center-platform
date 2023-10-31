@@ -27,7 +27,15 @@ public class Profile extends AbstractAggregateRoot<Profile> {
     @Embedded
     private EmailAddress email;
 
+
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "address_street")),
+            @AttributeOverride(name = "number", column = @Column(name = "address_number")),
+            @AttributeOverride(name = "city", column = @Column(name = "address_city")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "address_zipCode")),
+            @AttributeOverride(name = "country", column = @Column(name = "address_country"))
+    })
     private StreetAddress address;
 
     @CreatedDate

@@ -19,7 +19,7 @@ public record StreetAddress(
     }
 
     public String getStreetAddress() {
-        return String.format("%s %s", street, number);
+        return String.format("%s %sth, %s, %s, %s", street, number, city, zipCode, country);
     }
 
     public StreetAddress {
