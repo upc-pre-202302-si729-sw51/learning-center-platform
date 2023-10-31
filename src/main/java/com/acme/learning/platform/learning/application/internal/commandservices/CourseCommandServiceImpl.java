@@ -42,7 +42,7 @@ public class CourseCommandServiceImpl implements CourseCommandService {
     public void handle(DeleteCourseCommand command) {
         if (!courseRepository.existsById(command.courseId())) {
             throw new IllegalArgumentException("Course does not exist");
-        };
+        }
         courseRepository.deleteById(command.courseId());
     }
 
