@@ -106,7 +106,6 @@ public class CoursesController {
         var updateCourseCommand = UpdateCourseCommandFromResourceAssembler.toCommandFromResource(courseId, updateCourseResource);
         var updatedCourse = courseCommandService.handle(updateCourseCommand);
         if (updatedCourse.isEmpty()) {
-            System.out.println("updatedCourseId: " + updatedCourse.get().getId());
             return ResponseEntity.badRequest().build();
         }
         var courseResource = CourseResourceFromEntityAssembler.toResourceFromEntity(updatedCourse.get());
