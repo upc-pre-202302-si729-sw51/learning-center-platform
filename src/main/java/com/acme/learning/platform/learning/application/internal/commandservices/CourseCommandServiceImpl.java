@@ -21,7 +21,7 @@ public class CourseCommandServiceImpl implements CourseCommandService {
     @Override
     public Long handle(CreateCourseCommand command) {
         if (courseRepository.existsByTitle(command.title())) {
-            throw new IllegalArgumentException("Course already exists");
+            throw new IllegalArgumentException("Course with same title already exists");
         }
         var course = new Course(command.title(), command.description());
         courseRepository.save(course);
