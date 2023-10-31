@@ -7,6 +7,8 @@ import com.acme.learning.platform.learning.domain.services.CourseCommandService;
 import com.acme.learning.platform.learning.infrastructure.persistence.jpa.repositories.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CourseCommandServiceImpl implements CourseCommandService {
     private final CourseRepository courseRepository;
@@ -26,18 +28,15 @@ public class CourseCommandServiceImpl implements CourseCommandService {
     }
 
     @Override
-    public Long handle(UpdateCourseCommand command) {
-        courseRepository.findById(command.id()).map(courseToUpdate -> {
-            var courseWithSameTitle = courseRepository.findByTitle(command.title());
-            if (courseWithSameTitle.isPresent() && !courseWithSameTitle.get().getId().equals(command.id())) {
+    public Optional<Course> handle(UpdateCourseCommand command) {
+        if (!courseRepository.existsById(command.id())) {
+            throw new IllegalArgumentException("Course does not exist");
+        };
+        var courseToUpdate = courseRepository.findById(command.id()).get();
+        if (courseRepository.existsByTitleAndIdIsNot(command.title(), command.id()))
                 throw new IllegalArgumentException("Course with same title already exists");
-            }
-            courseToUpdate.setTitle(command.title());
-            courseToUpdate.setDescription(command.description());
-            courseRepository.save(courseToUpdate);
-            return courseToUpdate.getId();
-        }).orElseThrow(() -> new IllegalArgumentException("Course not found"));
-        return 0L;
+        var updatedCourse = courseRepository.save(courseToUpdate.updateInformation(command.title(), command.description()));
+        return Optional.of(updatedCourse);
     }
 
 }

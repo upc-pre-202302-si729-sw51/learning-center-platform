@@ -31,4 +31,10 @@ public class Course extends AuditableModel {
         this.title = title;
         this.description = description;
     }
+
+    public Course updateInformation(String title, String description) {
+        this.title = title;
+        this.description = description;
+        return this;
+    }
 }

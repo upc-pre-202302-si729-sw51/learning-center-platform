@@ -62,15 +62,13 @@ public class CoursesController {
 
     @PutMapping("/{courseId}")
     public ResponseEntity<CourseResource> updateCourse(@PathVariable Long courseId, @RequestBody UpdateCourseResource updateCourseResource) {
-        var updateCourseCommand = UpdateCourseCommandFromResourceAssembler.toCommandFromResource(updateCourseResource);
-        var updatedCourseId = courseCommandService.handle(updateCourseCommand);
-        if (updatedCourseId == 0L) {
+        var updateCourseCommand = UpdateCourseCommandFromResourceAssembler.toCommandFromResource(courseId, updateCourseResource);
+        var updatedCourse = courseCommandService.handle(updateCourseCommand);
+        if (updatedCourse.isEmpty()) {
+            System.out.println("updatedCourseId: " + updatedCourse.get().getId());
             return ResponseEntity.badRequest().build();
         }
-        var getCourseByIdQuery = new GetCourseByIdQuery(courseId);
-        var course = courseQueryService.handle(getCourseByIdQuery);
-        if (course.isEmpty()) return ResponseEntity.badRequest().build();
-        var courseResource = CourseResourceFromEntityAssembler.toResourceFromEntity(course.get());
+        var courseResource = CourseResourceFromEntityAssembler.toResourceFromEntity(updatedCourse.get());
         return ResponseEntity.ok(courseResource);
     }
 }
