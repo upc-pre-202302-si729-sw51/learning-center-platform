@@ -1,6 +1,7 @@
 package com.acme.learning.platform.learning.interfaces.rest;
 
 import com.acme.learning.platform.learning.domain.model.commands.CreateCourseCommand;
+import com.acme.learning.platform.learning.domain.model.commands.DeleteCourseCommand;
 import com.acme.learning.platform.learning.domain.model.commands.UpdateCourseCommand;
 import com.acme.learning.platform.learning.domain.model.queries.GetAllCoursesQuery;
 import com.acme.learning.platform.learning.domain.model.queries.GetCourseByIdQuery;
@@ -70,5 +71,11 @@ public class CoursesController {
         }
         var courseResource = CourseResourceFromEntityAssembler.toResourceFromEntity(updatedCourse.get());
         return ResponseEntity.ok(courseResource);
+    }
+    @DeleteMapping("/{courseId}")
+    public ResponseEntity<?> deleteCourse(@PathVariable Long courseId) {
+        var deleteCourseCommand = new DeleteCourseCommand(courseId);
+        courseCommandService.handle(deleteCourseCommand);
+        return ResponseEntity.ok("Course with given id successfully deleted");
     }
 }

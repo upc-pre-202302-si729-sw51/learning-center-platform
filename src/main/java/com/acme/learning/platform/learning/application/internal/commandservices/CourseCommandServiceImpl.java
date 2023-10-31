@@ -2,6 +2,7 @@ package com.acme.learning.platform.learning.application.internal.commandservices
 
 import com.acme.learning.platform.learning.domain.model.aggregates.Course;
 import com.acme.learning.platform.learning.domain.model.commands.CreateCourseCommand;
+import com.acme.learning.platform.learning.domain.model.commands.DeleteCourseCommand;
 import com.acme.learning.platform.learning.domain.model.commands.UpdateCourseCommand;
 import com.acme.learning.platform.learning.domain.services.CourseCommandService;
 import com.acme.learning.platform.learning.infrastructure.persistence.jpa.repositories.CourseRepository;
@@ -37,6 +38,14 @@ public class CourseCommandServiceImpl implements CourseCommandService {
                 throw new IllegalArgumentException("Course with same title already exists");
         var updatedCourse = courseRepository.save(courseToUpdate.updateInformation(command.title(), command.description()));
         return Optional.of(updatedCourse);
+    }
+
+    @Override
+    public void handle(DeleteCourseCommand command) {
+        if (!courseRepository.existsById(command.courseId())) {
+            throw new IllegalArgumentException("Course does not exist");
+        };
+        courseRepository.deleteById(command.courseId());
     }
 
 }
