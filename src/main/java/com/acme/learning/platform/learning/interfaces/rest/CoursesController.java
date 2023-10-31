@@ -1,13 +1,16 @@
 package com.acme.learning.platform.learning.interfaces.rest;
 
 import com.acme.learning.platform.learning.domain.model.commands.CreateCourseCommand;
+import com.acme.learning.platform.learning.domain.model.commands.UpdateCourseCommand;
 import com.acme.learning.platform.learning.domain.model.queries.GetAllCoursesQuery;
 import com.acme.learning.platform.learning.domain.model.queries.GetCourseByIdQuery;
 import com.acme.learning.platform.learning.domain.services.CourseCommandService;
 import com.acme.learning.platform.learning.domain.services.CourseQueryService;
 import com.acme.learning.platform.learning.interfaces.rest.resources.CourseResource;
 import com.acme.learning.platform.learning.interfaces.rest.resources.CreateCourseResource;
+import com.acme.learning.platform.learning.interfaces.rest.resources.UpdateCourseResource;
 import com.acme.learning.platform.learning.interfaces.rest.transform.CourseResourceFromEntityAssembler;
+import com.acme.learning.platform.learning.interfaces.rest.transform.UpdateCourseCommandFromResourceAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +30,7 @@ public class CoursesController {
     }
 
     @PostMapping
-    public ResponseEntity<CourseResource> createCourse(CreateCourseResource createCourseResource) {
+    public ResponseEntity<CourseResource> createCourse(@RequestBody CreateCourseResource createCourseResource) {
         var createCourseCommand = new CreateCourseCommand(createCourseResource.title(), createCourseResource.description());
         var courseId = courseCommandService.handle(createCourseCommand);
         if (courseId == 0L) {
@@ -55,5 +58,19 @@ public class CoursesController {
         var courses = courseQueryService.handle(getAllCoursesQuery);
         var courseResources = courses.stream().map(CourseResourceFromEntityAssembler::toResourceFromEntity).toList();
         return ResponseEntity.ok(courseResources);
+    }
+
+    @PutMapping("/{courseId}")
+    public ResponseEntity<CourseResource> updateCourse(@PathVariable Long courseId, @RequestBody UpdateCourseResource updateCourseResource) {
+        var updateCourseCommand = UpdateCourseCommandFromResourceAssembler.toCommandFromResource(updateCourseResource);
+        var updatedCourseId = courseCommandService.handle(updateCourseCommand);
+        if (updatedCourseId == 0L) {
+            return ResponseEntity.badRequest().build();
+        }
+        var getCourseByIdQuery = new GetCourseByIdQuery(courseId);
+        var course = courseQueryService.handle(getCourseByIdQuery);
+        if (course.isEmpty()) return ResponseEntity.badRequest().build();
+        var courseResource = CourseResourceFromEntityAssembler.toResourceFromEntity(course.get());
+        return ResponseEntity.ok(courseResource);
     }
 }
