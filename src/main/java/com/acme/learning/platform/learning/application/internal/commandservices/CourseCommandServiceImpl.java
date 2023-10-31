@@ -30,9 +30,7 @@ public class CourseCommandServiceImpl implements CourseCommandService {
 
     @Override
     public Optional<Course> handle(UpdateCourseCommand command) {
-        if (!courseRepository.existsById(command.id())) {
-            throw new IllegalArgumentException("Course does not exist");
-        };
+        if (!courseRepository.existsById(command.id())) throw new IllegalArgumentException("Course does not exist");
         var courseToUpdate = courseRepository.findById(command.id()).get();
         if (courseRepository.existsByTitleAndIdIsNot(command.title(), command.id()))
                 throw new IllegalArgumentException("Course with same title already exists");
