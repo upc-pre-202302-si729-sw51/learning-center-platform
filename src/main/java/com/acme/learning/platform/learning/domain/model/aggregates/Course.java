@@ -4,7 +4,6 @@ import com.acme.learning.platform.learning.domain.model.valueobjects.LearningPat
 import com.acme.learning.platform.shared.domain.model.entities.AuditableModel;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 import org.apache.logging.log4j.util.Strings;
 
 /**
