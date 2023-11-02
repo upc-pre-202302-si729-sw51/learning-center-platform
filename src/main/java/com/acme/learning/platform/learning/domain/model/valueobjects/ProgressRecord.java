@@ -20,6 +20,7 @@ public class ProgressRecord {
     }
 
     public void initializeProgressRecord(Enrollment enrollment, LearningPath learningPath) {
+        if (learningPath.isEmpty()) return;
         Tutorial tutorial = learningPath.getFirstTutorialInLearningPath();
         ProgressRecordItem progressRecordItem = new ProgressRecordItem(enrollment, tutorial);
         progressRecordItems.add(progressRecordItem);
