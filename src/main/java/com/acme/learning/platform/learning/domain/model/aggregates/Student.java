@@ -16,7 +16,7 @@ public class Student extends AuditableModel {
     @Getter
     @Embedded
     @Column(name = "acme_student_id")
-    private AcmeStudentRecordId acmeStudentRecordId;
+    private final AcmeStudentRecordId acmeStudentRecordId;
 
     @Embedded
     private ProfileId profileId;
