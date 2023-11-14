@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/v1/authentication", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "Authentication", description = "Authentication Endpoint Management")
+@Tag(name = "Authentication", description = "Authentication Management Endpoints")
 public class AuthenticationController {
     private final UserCommandService userCommandService;
 
