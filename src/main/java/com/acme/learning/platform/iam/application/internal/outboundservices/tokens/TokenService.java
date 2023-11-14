@@ -1,7 +1,5 @@
 package com.acme.learning.platform.iam.application.internal.outboundservices.tokens;
 
-import org.springframework.security.core.Authentication;
-
 /**
  * Token service interface.
  * <p>
