@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -57,15 +58,19 @@ public class User extends AbstractAggregateRoot<User> {
         this.password = password;
     }
 
-    public User(String username, String password, Set<Role> roles) {
-        this();
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
+    public User(String username, String password, List<Role> roles) {
+        this(username, password);
+        addRoles(roles);
     }
 
     public User addRole(Role role) {
         this.roles.add(role);
+        return this;
+    }
+
+    public User addRoles(List<Role> roles) {
+        var validatedRoleSet = Role.validateRoleSet(roles);
+        this.roles.addAll(validatedRoleSet);
         return this;
     }
 

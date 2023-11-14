@@ -13,4 +13,6 @@ public interface HashingService {
      * @return the hashed password.
      */
     String encode(CharSequence rawPassword);
+
+    boolean matches(CharSequence rawPassword, String encodedPassword);
 }
